@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>example of data</title>
+
+    <!-- js files imported -->
+    <script type="text/javascript" src="js/knockout-3.5.1.js"></script>
+    <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="js/toastr/toastr.min.js"></script>
+
+    <!-- css files imported -->
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/toastr.css" />
+</head>
+<body>
+
+    <div id="testContainer">
+        <h4>Contact List</h4>
+        <hr />
+        <ul data-bind="foreach: contacts">
+            <li data-bind="text: $data"></li>
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+ 
+        var ContactListViewModel = function() {
+            var self = this;
+
+            self.contacts = ko.observableArray([]);
+  
+            self.loadList = function(){
+                self.contacts.push('Andre');
+                self.contacts.push('Joao');
+                self.contacts.push('Miguel');
+            };
+
+
+            self.init = function() {
+                self.loadList();                
+            };
+        };
+
+        var myList = new ContactListViewModel();
+        ko.applyBindings(myList, document.getElementById("testContainer"));
+        myList.init();
+
+      
+    </script>
+</body>
+</html>
