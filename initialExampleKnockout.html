@@ -42,7 +42,7 @@
             var self = this;
 
             self.contacts = ko.observable('');
-
+ 
             self.getList = function(){
                 var rawData = self.getContactsJson();
                 var jsonList = JSON.parse(rawData);
