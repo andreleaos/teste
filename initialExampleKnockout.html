@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Example KnockoutJS</title>
+
+    <!-- js files imported -->
+    <script type="text/javascript" src="js/knockout-3.5.1.js"></script>
+    <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="js/vkbeautify.0.99.00.beta.js"></script>
+    <script type="text/javascript" src="js/toastr/toastr.min.js"></script>
+
+    <!-- css files imported -->
+    <link rel="stylesheet" href="js/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="js/toastr/toastr.css" />
+
+</head> 
+<body> 
+    <h3>Load example data of knockout</h3> 
+    <hr/>
+    <br/><br/>
+
+    <div id="contactContainer">
+        <div>
+            <pre data-bind="text: contacts"></pre>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        var ContactViewModel = function() {
+            var self = this;
+
+            self.name = ko.observable('');
+            self.email = ko.observable('');
+            self.phone = ko.observable('');
+        }; 
+
+        var ContactListViewModel = function() {
+            var self = this;
+
+            self.contacts = ko.observable('');
+
+            self.getList = function(){
+                var rawData = self.getContactsJson();
+                var jsonList = JSON.parse(rawData);
+                var msgFormatted = vkbeautify.json(jsonList);
+                self.contacts(msgFormatted);
+            };
+
+            self.getContactsJson = function() {
+                var rawData = '{\"contacts\":[{\"name\": \"andre\", \"email\": \"andre@gmail.com\", \"phone\": \"11 4758-6321\"}, {\"name\": \"joao\", \"email\": \"joao@gmail.com\", \"phone\": \"11 3344-5863\"}, {\"name\": \"pedro\", \"email\": \"pedro@gmail.com\", \"phone\": \"11 3357-1698\"}]}';                                    
+                return rawData;
+            };
+
+            self.init = function() {
+                self.getList();                
+            };
+        };
+
+        var contactViewModel = new ContactListViewModel();
+        ko.applyBindings(contactViewModel, document.getElementById("contactContainer"));
+        contactViewModel.init();
+
+      
+    </script>
+</body>
+</html>
